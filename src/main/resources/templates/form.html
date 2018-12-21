@@ -11,8 +11,15 @@
             <p><label for="name">Name</label>: <input type="text" name="name" id="name"/></p>
             <p><label for="address">Address</label>: <input type="text" name="address" id="address"/></p>
             <p><input type="submit" value="Submit" /></p>
+            <p><input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" /></p>
         </form>
 
-        <p></p>
+        <p>
+
+            <form action="#" th:action="@{/login}" method="GET">
+                <input type="submit" value="Go to Admin Login" />
+            </form>
+
+        </p>
     </body>
 </html>

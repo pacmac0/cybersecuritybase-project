@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Dashboard</title>
+    </head>
+
+    <body>
+
+        <h1>Thank you! You have been logged in as admin!</h1>
+
+        <form action="#" th:action="@{/adminDashboard}" method="GET">
+            <input type="submit" value="load subscribers" />
+        </form>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Name</th><th>Address</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!--
+            some how i get an error for ${}
+            <tr th:if="${adminDashboard.empty}">
+                <td colspan="2">No Subscribers</td>
+            </tr>
+            -->
+
+            <!-- thymleaf is taking care of escaping for us so no JS can be injected.
+             To do so we have to use th:text=... instead of th:utext=... -->
+            <tr th:each="subscribers : ${adminDashboard}">
+                <!--
+                <td th:text="${subscribers.getName()}">Name</td>
+                <td th:text="${subscribers.getAddress()}">Address</td>
+                -->
+                <td th:utext="${subscribers.getName()}">Name</td>
+                <td th:utext="${subscribers.getAddress()}">Address</td>
+            </tr>
+            </tbody>
+        </table>
+
+
+        <form action="#" th:action="@{/deleteSignUps}" method="GET">
+            <input type="submit" value="Delete subscribers list" />
+        </form>
+
+    </body>
+</html>
