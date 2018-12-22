@@ -1,0 +1,137 @@
+Cyber Security Project:
+
+All described codelines are in the code and only have to be uncommented!
+
+1.
+The first is a SQL injection to allow us to login as admin without the right credentials. 
+To find this flaw you simply have to try it and hope it does not get prevented somehow. If it works you get logged in so you get direct feedback.
+To execute the attack:
+1. Go to admin login page (http://localhost:8080/login) 
+2. add something to the name field
+3. add ( peter' or'True ) to the password field and you get logged in to the adminDashboard
+To prevent this from happening, we use Prepared Statements.
+To enable this functionality you have to add the following code to the signupController.
+line, code
+115: has to be deleted/ commented out
+121: String query = "SELECT password FROM accounts WHERE name = ? and password = ?";
+122: PreparedStatement pstmt = connection.prepareStatement( query );
+123: pstmt.setString( 1, name);
+124: pstmt.setString( 2, password);
+125: ResultSet resultSet = pstmt.executeQuery();
+Now the attacker gets redirected to the login page.
+
+2.
+The second security flaw I added is an broken access control issue which allows an attacker to bypass the added login and go directly to the adminDashboard. Where all subscribers are shown and some admin functionality can be used.
+To execute the attack:
+1. go to login page (http://localhost:8080/login)
+2. view source code
+3. change the URL to "http://localhost:8080/adminDashboard"
+4. see adminDashboard
+The attacker can find this vulnerability by reviewing the login pages source code. The submit button for the login directly points to the /adminDashboard.
+Now that you got access to the admin dashboard view the source code and note the address "/deleteSignUps", the "Delete subscribers list" button points to, for later ;)
+To prevent this from happening I added a Session cookie which saves a special attribute if the person logged in with the correct username and password, which are username: "admin", Pw: "admin".
+To enable this functionality you have to add the following code to the signupController. 
+line, code 
+145: session.setAttribute("ident", "qwertzuiopasdfghjklyxcvbnm");
+153: session.setAttribute("ident", "null");
+161: if(session.getAttribute("ident") == "qwertzuiopasdfghjklyxcvbnm") {
+164-165: } return("login");
+171: if(session.getAttribute("ident") == "qwertzuiopasdfghjklyxcvbnm") {
+176-177: } return("redirect:/login");
+
+now you get redirected to the login page if you try to enter the admin dashboard by URL.
+
+3.
+The third security flaw I added is an JavaScript injection, which allows the attacker to put JavaScript in the data of the form which then gets executed when some one loads it in his HTML. For example when all the subscribers get loaded at the adminDashboard.
+To find this flaw you simply have to try it and hope it gets executed somewhere. If the attacker sends a message to himself in the script he knows on arrival, that the script got executed.
+To execute the attack:
+1. go to the sign up form (http://localhost:8080/form)
+2. Add some name to the name field
+3. Add <script>alert("warning");</script> to the address field
+4. Login as admin (username: "admin", Pw: "admin")
+5. click load subscribers
+6. the script gets executed and the "warning" alert shows.
+To prevent this from happening, we can use thymleafs build in functionality to escape all tags like <script> which might cause code execution and just handle them as text.
+To do so change the following in adminDashboard.html
+line, code
+33: <td th:text="${subscribers.getName()}">Name</td>
+34: <td th:text="${subscribers.getAddress()}">Address</td>
+and delete or comment out line 37-38
+
+4.
+The next vulnerability is a CSRF attack, which allows us to delete all subscribers by executing a admin function.
+To find this flaw you simply have to try it and hope it does not get checked somehow.
+To execute the attack:
+1. Add some subscriber so you can see if he gets deleted
+2. Add something in the name field
+3. Add "<iframe src="http://localhost:8080/deleteSignUps"></iframe>" to the address field
+4. Submit it
+5. Login as admin (username: "admin", Pw: "admin")
+6. Press load subscribers (might have to press it a couple of times)
+7. all subscribers got deleted
+To prevent this from happening I tried to add springs CSRF protection in the security config like in exercise 5.1, which did not worked out.
+But I noticed, that we can use thymleafs build in functionality to escape all tags like <iframe> which might cause code execution and just handle them as text.
+To do so change the following in adminDashboard.html (note, that this is the same prevention method as for the JavaScript injection. So if you already changed the code and never changed it back this will not work now).
+line, code
+33: <td th:text="${subscribers.getName()}">Name</td>
+34: <td th:text="${subscribers.getAddress()}">Address</td>
+and delete or comment out line 36-37
+
+5.
+Last but not least there is a broken authentication which allows us to do a brute force password cracking.
+To execute the attack use the OWASP Zap tool from the exercise 4.1 or just try by hand (max attempts is set to 3 right now).
+I added a functionality that blocks IP addresses if they tried to log in more than 3 times with wrong credentials.
+To do so change the following in SignupController.java
+line, code
+70-110: String IP = "000.000.000.000";
+            String xfHeader = request.getHeader("X-Forwarded-For");
+            //System.out.println(xfHeader);
+            if (xfHeader == null){
+                ip =  request.getRemoteAddr();
+            } else {ip = xfHeader.split(",")[0];}
+            //System.out.println(ip);
+
+            // check if ip is already in db
+            String ipcheckquery = "SELECT ip FROM ipBlock WHERE ip= ?";
+            PreparedStatement ipcheckpstmt = connection.prepareStatement( ipcheckquery );
+            ipcheckpstmt.setString( 1, ip);
+            ResultSet ipinfo = ipcheckpstmt.executeQuery();
+
+            if(ipinfo.next()) {
+                // get attempts from DB
+                String attemptsquery = "SELECT attempts FROM ipBlock WHERE ip= ?";
+                PreparedStatement attemptspstmt = connection.prepareStatement( attemptsquery );
+                attemptspstmt.setString( 1, ip);
+                ResultSet attempts = attemptspstmt.executeQuery();
+
+                // check if attempts is higher then max value
+                attempts.next(); // don't forget it!!! otherwise it crashes
+                if(attempts.getInt("attempts") >= maxTrys) {
+                    System.out.println("more then " + maxTrys + " attempts by: " + ip);
+                    return "login";
+                }
+                // increase value of attempts and write back to database
+                int update = attempts.getInt("attempts") + 1;
+                String attemptsupdatequery = "UPDATE ipBlock SET attempts = ? WHERE ip = ?";
+                PreparedStatement attemptsupdatespstmt = connection.prepareStatement( attemptsupdatequery );
+                attemptsupdatespstmt.setString( 1, String.valueOf(update));
+                attemptsupdatespstmt.setString( 2, ip);
+                attemptsupdatespstmt.executeUpdate();
+            } else {
+                //insert ip, that tryed to login, in database, if it is not in it yet
+                String updatequery = "INSERT INTO ipblock (ip, attempts) VALUES (?, 1)";
+                PreparedStatement updatepstmt = connection.prepareStatement( updatequery );
+                updatepstmt.setString( 1, ip);
+                updatepstmt.executeUpdate();
+                }
+
+132-136: String attemptsresetquery = "UPDATE ipBlock SET attempts = ? WHERE ip = ?";
+                PreparedStatement attemptsresetspstmt = connection.prepareStatement( attemptsresetquery );
+                attemptsresetspstmt.setString( 1, String.valueOf(0));
+                attemptsresetspstmt.setString( 2, ip);
+                attemptsresetspstmt.executeUpdate();
+
+If you entered 3 times wrong login data you are not able to log in from this ip anymore. If you keep trying the terminal in which the application runs prints out "more then 3 attempts by: 127.0.0.1(or your ip)" and you always get redirected to the login page.
+"
+
+You migth have to delete the database(ipBlock) if you want to try again, because your ip got already blacklisted and you can't login from this ip.

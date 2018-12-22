@@ -61,11 +61,12 @@ public class SignupController {
         return "login";
     }
 
-    @RequestMapping(value = "/adminLogin", method = RequestMethod.POST)
+    @RequestMapping(value = "/adminDashboard", method = RequestMethod.POST)
     public String login(@RequestParam String name, @RequestParam String password) {
         try {
-            // check ip and count login attempts
 
+            /* brute force detector
+            // check ip and count login attempts
             String ip = "000.000.000.000";
             String xfHeader = request.getHeader("X-Forwarded-For");
             //System.out.println(xfHeader);
@@ -107,43 +108,50 @@ public class SignupController {
                 updatepstmt.setString( 1, ip);
                 updatepstmt.executeUpdate();
                 }
+            */
 
 
             // broken system for SQL injection
-            /*
             ResultSet resultSet = connection.createStatement().executeQuery("SELECT password FROM accounts WHERE name='" + name + "' and password='" + password + "'");
-            System.out.println(resultSet.next()); // resultSet.next() has to executed once otherwise it can't find database (gets used below)
-            */
+
+
 
             // solution for SQL injection
+            /*
             String query = "SELECT password FROM accounts WHERE name = ? and password = ?";
             PreparedStatement pstmt = connection.prepareStatement( query );
             pstmt.setString( 1, name);
             pstmt.setString( 2, password);
             ResultSet resultSet = pstmt.executeQuery();
+            */
 
+            //resultSet.next() has to executed once otherwise it can't find database (gets used below)
             if(resultSet.next()) {
+                /* brute force detector
                 // because password and username are correct set attempts back to 0
                 String attemptsresetquery = "UPDATE ipBlock SET attempts = ? WHERE ip = ?";
                 PreparedStatement attemptsresetspstmt = connection.prepareStatement( attemptsresetquery );
                 attemptsresetspstmt.setString( 1, String.valueOf(0));
                 attemptsresetspstmt.setString( 2, ip);
                 attemptsresetspstmt.executeUpdate();
-
-
+                */
 
                 /*
                 added my own session ident which is set if password and username fit
                 and gets set to null if user leaves site
                 /adminDashboard is only loading if ident is set correct
                 */
+                /* broken access control, add session with parameter
                 session.setAttribute("ident", "qwertzuiopasdfghjklyxcvbnm");
+                */
                 return "adminDashboard";
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        /* broken access control, add session with parameter
         session.setAttribute("ident", "null");
+        */
         return "redirect:/login";
     }
 
@@ -159,10 +167,14 @@ public class SignupController {
 
     @RequestMapping(value = "/deleteSignUps", method = RequestMethod.GET)
     public String deleteSignUps() {
+        /* broken access control, add session with parameter
         if(session.getAttribute("ident") == "qwertzuiopasdfghjklyxcvbnm") {
+        */
             signupRepository.deleteAll();
             return("redirect:/adminDashboard");
+        /* broken access control, add session with parameter
         }
         return("redirect:/login");
+        */
     }
 }

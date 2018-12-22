@@ -1833,3 +1833,174 @@ CREATE TABLE ipblock (
     ip varchar(20) PRIMARY KEY,
     attempts int(20)
 ) [42101-193]
+2018-12-21 14:00:04 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Table "IPBLOCK" already exists; SQL statement:
+CREATE TABLE ipblock (
+    ip varchar(20) PRIMARY KEY,
+    attempts int(20)
+) [42101-193]
+2018-12-21 14:08:36 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "IPBLOCK" already exists; SQL statement:
+CREATE TABLE ipblock (
+    ip varchar(20) PRIMARY KEY,
+    attempts int(20)
+) [42101-193]
+2018-12-21 14:08:37 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Table "IPBLOCK" already exists; SQL statement:
+CREATE TABLE ipblock (
+    ip varchar(20) PRIMARY KEY,
+    attempts int(20)
+) [42101-193]
+2018-12-21 14:11:31 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "IPBLOCK" already exists; SQL statement:
+CREATE TABLE ipblock (
+    ip varchar(20) PRIMARY KEY,
+    attempts int(20)
+) [42101-193]
+2018-12-21 14:11:31 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Table "IPBLOCK" already exists; SQL statement:
+CREATE TABLE ipblock (
+    ip varchar(20) PRIMARY KEY,
+    attempts int(20)
+) [42101-193]
+2018-12-22 13:02:54 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "IPBLOCK" already exists; SQL statement:
+CREATE TABLE ipblock (
+    ip varchar(20) PRIMARY KEY,
+    attempts int(20)
+) [42101-193]
+2018-12-22 13:02:56 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Table "IPBLOCK" already exists; SQL statement:
+CREATE TABLE ipblock (
+    ip varchar(20) PRIMARY KEY,
+    attempts int(20)
+) [42101-193]
+2018-12-22 13:12:45 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "IPBLOCK" already exists; SQL statement:
+CREATE TABLE ipblock (
+    ip varchar(20) PRIMARY KEY,
+    attempts int(20)
+) [42101-193]
+2018-12-22 13:12:46 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Table "IPBLOCK" already exists; SQL statement:
+CREATE TABLE ipblock (
+    ip varchar(20) PRIMARY KEY,
+    attempts int(20)
+) [42101-193]
+2018-12-22 13:37:29 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "IPBLOCK" already exists; SQL statement:
+CREATE TABLE ipblock (
+    ip varchar(20) PRIMARY KEY,
+    attempts int(20)
+) [42101-193]
+2018-12-22 13:37:29 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Table "IPBLOCK" already exists; SQL statement:
+CREATE TABLE ipblock (
+    ip varchar(20) PRIMARY KEY,
+    attempts int(20)
+) [42101-193]
+2018-12-22 13:39:10 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "IPBLOCK" already exists; SQL statement:
+CREATE TABLE ipblock (
+    ip varchar(20) PRIMARY KEY,
+    attempts int(20)
+) [42101-193]
+2018-12-22 13:39:11 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Table "IPBLOCK" already exists; SQL statement:
+CREATE TABLE ipblock (
+    ip varchar(20) PRIMARY KEY,
+    attempts int(20)
+) [42101-193]
+2018-12-22 13:39:48 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "IPBLOCK" already exists; SQL statement:
+CREATE TABLE ipblock (
+    ip varchar(20) PRIMARY KEY,
+    attempts int(20)
+) [42101-193]
+2018-12-22 13:39:49 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Table "IPBLOCK" already exists; SQL statement:
+CREATE TABLE ipblock (
+    ip varchar(20) PRIMARY KEY,
+    attempts int(20)
+) [42101-193]
+2018-12-22 13:53:28 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Data conversion error converting " true"; SQL statement:
+SELECT password FROM accounts WHERE name='a' and password='peter' or' true' [22018-193]
+2018-12-22 13:54:15 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Data conversion error converting " true"; SQL statement:
+SELECT password FROM accounts WHERE name='peter' or' true' and password='sxas' [22018-193]
+2018-12-22 13:54:57 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Data conversion error converting " True"; SQL statement:
+SELECT password FROM accounts WHERE name='a' and password='peter' or' True' [22018-193]
+2018-12-22 13:55:52 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "IPBLOCK" already exists; SQL statement:
+CREATE TABLE ipblock (
+    ip varchar(20) PRIMARY KEY,
+    attempts int(20)
+) [42101-193]
+2018-12-22 13:55:52 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Table "IPBLOCK" already exists; SQL statement:
+CREATE TABLE ipblock (
+    ip varchar(20) PRIMARY KEY,
+    attempts int(20)
+) [42101-193]
+2018-12-22 14:01:33 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "IPBLOCK" already exists; SQL statement:
+CREATE TABLE ipblock (
+    ip varchar(20) PRIMARY KEY,
+    attempts int(20)
+) [42101-193]
+2018-12-22 14:01:34 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Table "IPBLOCK" already exists; SQL statement:
+CREATE TABLE ipblock (
+    ip varchar(20) PRIMARY KEY,
+    attempts int(20)
+) [42101-193]
+2018-12-22 14:17:23 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "IPBLOCK" already exists; SQL statement:
+CREATE TABLE ipblock (
+    ip varchar(20) PRIMARY KEY,
+    attempts int(20)
+) [42101-193]
+2018-12-22 14:17:23 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Table "IPBLOCK" already exists; SQL statement:
+CREATE TABLE ipblock (
+    ip varchar(20) PRIMARY KEY,
+    attempts int(20)
+) [42101-193]
+2018-12-22 14:23:45 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "IPBLOCK" already exists; SQL statement:
+CREATE TABLE ipblock (
+    ip varchar(20) PRIMARY KEY,
+    attempts int(20)
+) [42101-193]
+2018-12-22 14:23:45 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Table "IPBLOCK" already exists; SQL statement:
+CREATE TABLE ipblock (
+    ip varchar(20) PRIMARY KEY,
+    attempts int(20)
+) [42101-193]
+2018-12-22 14:24:55 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "IPBLOCK" already exists; SQL statement:
+CREATE TABLE ipblock (
+    ip varchar(20) PRIMARY KEY,
+    attempts int(20)
+) [42101-193]
+2018-12-22 14:24:56 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Table "IPBLOCK" already exists; SQL statement:
+CREATE TABLE ipblock (
+    ip varchar(20) PRIMARY KEY,
+    attempts int(20)
+) [42101-193]
+2018-12-22 14:33:05 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "IPBLOCK" already exists; SQL statement:
+CREATE TABLE ipblock (
+    ip varchar(20) PRIMARY KEY,
+    attempts int(20)
+) [42101-193]
+2018-12-22 14:33:05 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Table "IPBLOCK" already exists; SQL statement:
+CREATE TABLE ipblock (
+    ip varchar(20) PRIMARY KEY,
+    attempts int(20)
+) [42101-193]
